@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pegadinha boba</title>
+  <style>
+    body {
+      font-family: system-ui,Segoe UI,Roboto,Arial;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(120deg,#111827,#0b1220);
+      color: #fff;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      padding: 28px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 460px;
+    }
+    h1 { margin: 0 0 8px; font-size: 22px; }
+    p { margin: 6px 0 14px; }
+    button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 0;
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+    }
+    .confetti {
+      font-size: 40px;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Carregando... ⏳</h1>
+    <p id="msg">Só mais um segundo</p>
+    <div id="fun" style="margin-top:12px"></div>
+    <button id="reveal">Fazer outra brincadeira</button>
+  </div>
+
+  <script>
+    const msg = document.getElementById('msg');
+    const h1 = document.querySelector('h1');
+    const fun = document.getElementById('fun');
+    const btn = document.getElementById('reveal');
+
+    let jokes = []; // Aqui vamos guardar as mensagens já com a cidade
+
+    function showJoke() {
+      const pick = jokes[Math.floor(Math.random() * jokes.length)];
+      h1.textContent = 'Pegadinha pronta 😜';
+      msg.textContent = pick;
+      fun.innerHTML = `<div class="confetti">🎉🎈🍕</div>`;
+    }
+
+    // Pegar cidade via IP
+    fetch('https://ipapi.co/json/')
+      .then(r => r.json())
+      .then(data => {
+        const city = data.city || 'na sua cidade';
+        jokes = [
+          `Cuidado ${city}: olha o carro do leite`,
+          `Notícia de ${city}: os pombos fizeram greve`,
+          `Alerta em ${city}: uma bomba caiu do cemitério, não houve sobreviventes`,
+          `Alerta em ${city}: tempestade, o clima vai estar de dar raio`,
+          `Parabéns, ao sorteado de ${city}! Você ganhou uma bolsa de viagem para ${city}. ❤️`
+        ];
+        showJoke();
+      })
+      .catch(err => {
+        console.error(err);
+        jokes = [
+          'Cuidado: olha o carro do leite',
+          'Notícia: os pombos fizeram greve',
+          'Alerta: uma bomba caiu do cemitério, não houve sobreviventes',
+          'Alerta: tempestade, o clima vai estar de dar raio',
+          'Parabéns, ao sorteado! Vocé ganhou uma bolsa de viagem para uma cidade. ❤️'
+        ];
+        showJoke();
+      });
+
+    btn.addEventListener('click', showJoke);
+  </script>
+</body>
+</html>
