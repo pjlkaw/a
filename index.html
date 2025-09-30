@@ -46,7 +46,6 @@
     <h1>Carregando... ⏳</h1>
     <p id="msg">Só mais um segundo</p>
     <div id="fun" style="margin-top:12px"></div>
-    <button id="reveal">Fazer outra brincadeira</button>
   </div>
 
   <script>
@@ -55,37 +54,34 @@
     const fun = document.getElementById('fun');
     const btn = document.getElementById('reveal');
 
-    let jokes = []; // Aqui vamos guardar as mensagens já com a cidade
+    let jokes = [];
 
     function showJoke() {
       const pick = jokes[Math.floor(Math.random() * jokes.length)];
-      h1.textContent = 'Pegadinha pronta 😜';
+      h1.textContent = 'Notícia urgente';
       msg.textContent = pick;
-      fun.innerHTML = `<div class="confetti">🎉🎈🍕</div>`;
+      fun.innerHTML = `<div class="confetti">penes (aql macarrão la)</div>`;
     }
 
-    // Pegar cidade via IP
-    fetch('https://ipapi.co/json/')
+    // Usando ipwho.is que funciona bem no GitHub Pages
+    fetch('https://ipwho.is/')
       .then(r => r.json())
       .then(data => {
         const city = data.city || 'na sua cidade';
         jokes = [
-          `Cuidado ${city}: olha o carro do leite`,
-          `Notícia de ${city}: os pombos fizeram greve`,
+          `Cuidado moradores de ${city}: olha o carro da rua passando no seu leite`,
+          `Notícia de ${city}: mas e os labubu?`,
           `Alerta em ${city}: uma bomba caiu do cemitério, não houve sobreviventes`,
-          `Alerta em ${city}: tempestade, o clima vai estar de dar raio`,
-          `Parabéns, ao sorteado de ${city}! Você ganhou uma bolsa de viagem para ${city}. ❤️`
+          `Alerta em ${city}: bandido rouba boobie goods`,
+          `Parabéns, ao sorteado de ${city}! Você ganhou uma bolsa de viagem para ${city}. `
         ];
         showJoke();
       })
       .catch(err => {
         console.error(err);
         jokes = [
-          'Cuidado: olha o carro do leite',
-          'Notícia: os pombos fizeram greve',
-          'Alerta: uma bomba caiu do cemitério, não houve sobreviventes',
-          'Alerta: tempestade, o clima vai estar de dar raio',
-          'Parabéns, ao sorteado! Vocé ganhou uma bolsa de viagem para uma cidade. ❤️'
+          'O sistema bugou, mas o carro do ovo passou aqui ',
+          'Falha técnica: a pegadinha ficou tímida e não quis aparecer'
         ];
         showJoke();
       });
